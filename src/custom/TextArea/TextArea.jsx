@@ -21,6 +21,8 @@ const styles = {
     title: {
         marginTop: "12px",
         marginBottom: "7px",
+        fontSize: '12px',
+        textTransform: 'uppercase'
     },
     textarea: {
         border: "1px solid #9C9C9C",

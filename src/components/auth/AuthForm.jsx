@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { Box, Grid, Button, Typography } from "@mui/material";
 import InputField from "../../custom/Inputs/InputField";
@@ -6,21 +7,49 @@ import SeparatorLine from "../../custom/SeparatorLine/SeparatorLine";
 import AuthTitleForm from "../../custom/AuthTitleForm/AuthTitleForm";
 import CheckboxIsRememberMe from "./IsRememberMe";
 import AuthFooter from "./AuthFooter";
-import TwitterLogin from "react-twitter-login";
+import { TwitterAuthProvider, signInWithPopup } from "firebase/auth";
+import { authentication } from "../../contexts/Firebase/base";
+import API from "../../helpers/api";
 
 const AuthForm = ({ label, caption, type, user, setUser, onSubmitForm }) => {
+  let navigate = useHistory();
   const [isRememberMe, setIsRememberMe] = useState(false);
-  // const [payload, setPayload] = useState(null);
-  // const [idToken, setIdToken] = useState(null);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setUser({ ...user, [name]: value });
   };
 
-  const authHandler = (err, data) => {
-    console.log(err, 'ERROR', data, 'DATA');
+  const loginTwitter = () => {
+    const provider = new TwitterAuthProvider();
+    signInWithPopup(authentication, provider)
+      .then((res) => {
+        console.log(res.user.displayName)
+        let form = {
+          name: res._tokenResponse.screenName,
+          externalId: res.user.uid
+        }
+        API.post(`auth/twitter/signin`, form)
+          .then((res) => {
+            console.log(res, 'res')
+
+            let token = res.data.accessToken;
+            localStorage.setItem("accessToken", token);
+            navigate.push("/resumes");
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+        console.log(res)
+      })
+      .catch((err) => console.log(err))
   }
+
+  const line = () => {
+    console.log(123)
+  }
+
+  
 
   return (
     <>
@@ -70,21 +99,18 @@ const AuthForm = ({ label, caption, type, user, setUser, onSubmitForm }) => {
           <Grid sx={styles.content}>
             <SeparatorLine />
 
-            <TwitterLogin
-              authCallback={authHandler}
-              consumerKey="LUQ0c0x0X3dIZWlzVmhiYlltN0o6MTpjaQ"
-              consumerSecret="yDox-MVUQIJM3vpiRakHinCdXkoo3AgXocL0tX7fTfc64iZ4qZ"
-            />
-
-
-            {/* <Button sx={{ ...styles.button, ...styles.twitButton }}>
+            <Button sx={{ ...styles.button, ...styles.twitButton }} onClick={loginTwitter}>
               Sign-in with Twitter
-            </Button> */}
-            {/* <Button
-              sx={{ ...styles.button, ...styles.lineButton, marginTop: "20px" }}
+            </Button>
+
+            <a
+              onClick={line}
+              href="https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=1657233949&redirect_uri=http://localhost:4040/auth/line/signin&state=wst&scope=profile, openid"
             >
-              Login with LINE
-            </Button> */}
+              <Button sx={{ ...styles.button, ...styles.lineButton, marginTop: "20px" }} >
+                Login with LINE
+              </Button>
+            </a>
 
             <AuthFooter type={"dekstop"} />
           </Grid>

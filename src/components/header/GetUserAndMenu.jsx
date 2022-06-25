@@ -31,7 +31,7 @@ const UserProfile = () => {
   let userEmail = getMail[0];
 
   return (
-    <Box onClick={() => setShowMenu(!showMenu)}>
+    <Box onClick={() => setShowMenu(!showMenu)} sx={{position: 'relative'}}>
       <Box sx={{ display: "flex", alignItems: "center" }}>
         <Typography sx={styles.title}>
           Welcome,
@@ -48,6 +48,7 @@ const ProfileMenu = () => {
   let navigate = useHistory();
   const logout = () => {
     window.localStorage.removeItem("accessToken");
+    window.localStorage.removeItem("user");
     navigate.push("/signin");
   };
   return (

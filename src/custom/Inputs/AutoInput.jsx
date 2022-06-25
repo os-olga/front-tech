@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Box, Typography } from "@mui/material";
-import uuid from "react-uuid";
-import OutputInput from '../../components/resumes/OutputInput'
+import AddIcon from "@mui/icons-material/Add";
 
 const InputMap = {
     workValue: "workHistory",
@@ -15,22 +14,16 @@ const InputMap = {
     skillValue: "skills",
 };
 
-const AutoInput = ({ type, value, name, onChange, title, setFieldValue, values }) => {
-    console.log(InputMap[name])
-    const [data, setData] = useState(values[InputMap[name]]);
+const AutoInput = ({ type, value, name, title, setFieldValue }) => {
+    const [data, setData] = useState([])
+    const [text, setText] = useState('')
+
     const handleKeyPress = (event) => {
-        const { name } = event.target;
-
+        if(text === "") return
         if (event.key === "Enter") {
-            let obj = { id: uuid(), title: value };
-            data.push(obj);
-            switch (name) {
-                case "workValue":
-                    setFieldValue(name, [...name, obj], false);
-                    setFieldValue('workValue', "");
-                    break;
-
-            }
+            setFieldValue(name, [...value[name], text])
+            setText('')
+            setData([...value[name], text])
         }
     }
 
@@ -39,33 +32,33 @@ const AutoInput = ({ type, value, name, onChange, title, setFieldValue, values }
     };
 
     return (
-        <Box sx={{ marginBottom: '23px' }}>
+        <Box sx={{ marginBottom: '13px' }}>
             <Typography sx={styles.title}>{title}</Typography>
             <input
                 type={type}
                 name={name}
-                value={value[name]}
-                onChange={onChange}
-                onKeyPress={(event) => handleKeyPress(event, name.array)}
+                value={text}
+                onChange={(e) => setText(e.target.value)}
+                onKeyPress={(event) => handleKeyPress(event)}
                 maxLength="35"
                 placeholder="+ Write here"
                 style={{
                     ...styles.textField,
-                    width: `${(value.length + 1) * 7}` + "px",
+                    width: `${(text.length + 1) * 7}` + "px",
                 }}
             />
             {data?.map((item, index) => {
                 return (
-                    <div>{item.title}</div>
-                    // <OutputInput
-                    //     key={index}
-                    //     value={item}
-                    //     index={index}
-                    //     handleRemoveItem={(index) =>
-                    //         handleRemoveItem(index, item)
-                    //     }
-                    //     view={true}
-                    // />
+                    <span
+                        style={{ ...styles.block, padding: "8px", paddingRight: "40px" }}>
+                        {item}
+                            <button
+                                style={styles.removeButton}
+                                onClick={() => handleRemoveItem(index)}
+                            >
+                                <AddIcon sx={styles.removeIcon} />
+                            </button>
+                    </span>
                 )
             })}
         </Box>
@@ -76,6 +69,8 @@ const styles = {
     title: {
         marginTop: "12px",
         marginBottom: "7px",
+        fontSize: '12px',
+        textTransform: 'uppercase'
     },
     textField: {
         border: "1px solid #9C9C9C",
@@ -88,6 +83,31 @@ const styles = {
         marginRight: "10px",
         marginBottom: "24px",
     },
+
+    block: {
+        position: "relative",
+        display: "inline-flex",
+        alignItems: "center",
+        justifyItems: "start",
+        border: "1px solid #29CC8F",
+        borderRadius: "31px",
+        height: "27px",
+        marginRight: "10px",
+        padding: "12px 28px 13px 8px",
+      },
+      removeButton: {
+        fontSize: "18px",
+        position: "absolute",
+        right: "6px",
+        top: "8px",
+        border: "none",
+        borderLeft: "1px solid #29CC8F",
+        height: "25px",
+      },
+      removeIcon: {
+        transform: "rotate(45deg)",
+        color: "#9C9C9C",
+      },
 }
 
 export default AutoInput;

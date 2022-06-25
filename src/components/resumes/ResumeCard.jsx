@@ -133,7 +133,7 @@ const styles = {
     display: "flex",
     padding: "0.50rem 0rem",
     marginBottom: "1rem",
-    marginRight: "15px",
+    marginRight: "24px",
     height: "164px",
     "@media (max-width: 450px)": {
       margin: "0 auto",

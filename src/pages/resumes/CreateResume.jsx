@@ -202,7 +202,7 @@ const CreateResume = () => {
 
 const styles = {
   container: {
-    width: "90%",
+    width: "966px",
     margin: "0 auto",
     position: "relative",
     "@media (max-width: 900px)": {
@@ -210,6 +210,7 @@ const styles = {
     },
   },
   introduction: {
+    width: '333px',
     border: "1px solid #C4C4C4",
     padding: "20px",
     borderRight: "none",

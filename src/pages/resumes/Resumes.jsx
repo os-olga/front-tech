@@ -16,8 +16,9 @@ function TabPanel(props) {
       id={`simple-tabpanel-${index}`}
       aria-labelledby={`simple-tab-${index}`}
       {...other}
+      style={{ color: 'red' }}
     >
-      {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
+      {value === index && <Box sx={{ marginTop: '27px' }}>{children}</Box>}
     </div>
   );
 }
@@ -38,15 +39,31 @@ function a11yProps(index) {
 const styles = {
   root: {
     width: "100%",
-    "& .MuiTab-root.Mui-selected": {
-      color: `${mainColor}`,
-      textTransform: "inherit",
-    },
+  },
+  container: {
+    maxWidth: '1160px',
+    margin: '0 auto 40px auto',
+  },
+  box: {
+    display: "flex",
+    flexWrap: "wrap",
+    listStyle: "none",
+    margin: "0 auto",
+    padding: "20px 0px 20px 32px",
+    border: '1px solid #ccc',
+    minHeight: '450px'
   },
   tab: {
     color: `${greyColor}`,
     textTransform: "inherit",
-  },
+    padding: '0px',
+    marginRight: '20px',
+    "&.Mui-selected": {
+      color: `${mainColor}`,
+      textTransform: "inherit",
+      fontWeight: '400',
+    },
+  }
 };
 
 export default function Resumes() {
@@ -67,14 +84,14 @@ export default function Resumes() {
   };
 
   return (
-    <Box sx={styles.root}>
-      <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+    <Box sx={styles.container}>
+      <Box>
         <Tabs
+          textColor="primary"
           value={value}
           onChange={handleChange}
-          aria-label="basic tabs example"
           TabIndicatorProps={{
-            style: { backgroundColor: `${mainColor}` },
+            style: { backgroundColor: `${mainColor}`, },
           }}
         >
           <Tab sx={styles.tab} label="My Resumes" {...a11yProps(0)} />
@@ -82,16 +99,7 @@ export default function Resumes() {
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
-        <Box
-          sx={{
-            display: "flex",
-            flexWrap: "wrap",
-            listStyle: "none",
-            margin: "0 auto",
-            padding: "0",
-            maxWidth: "1110px",
-          }}
-        >
+        <Box sx={styles.box}>
           <CreateButton />
           {resumesData &&
             resumesData.map((item, index) => {
@@ -107,7 +115,9 @@ export default function Resumes() {
             })}
         </Box>
       </TabPanel>
-      <TabPanel value={value} index={1}></TabPanel>
+      <TabPanel value={value} index={1}>
+        <Box sx={styles.box}></Box>
+      </TabPanel>
     </Box>
   );
 }

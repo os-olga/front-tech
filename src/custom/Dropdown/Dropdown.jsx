@@ -1,8 +1,9 @@
-import { Box, Select, MenuItem } from "@mui/material"
+import { Box, Select, MenuItem, Typography } from "@mui/material"
 
-const Dropdown = ({ name, value, onChange, data }) => {
+const Dropdown = ({ name, value, onChange, data, text }) => {
     return (
         <Box sx={{ marginBottom: '23px' }}>
+            <Typography sx={{fontSize: '12px'}}>{text}</Typography>
             <Select
                 value={value}
                 onChange={onChange}

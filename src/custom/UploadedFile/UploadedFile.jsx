@@ -7,11 +7,14 @@ const UploadedFile = ({ file }) => {
       <Typography sx={styles.fileName}>
         {file.name.length > 25 ? file.name.substr(0, 25) + "..." : file.name}
       </Typography>
-      <img
-        src="../../resumeDetail/book2.png"
-        style={styles.uploadImage}
-        alt=""
-      />
+      <img style={{ position: 'absolute', bottom: '0', right: '0' }} src="../../images/book.png" alt="" />
+      <Box sx={styles.action}>
+        <Box sx={styles.inner}>
+          <button style={styles.btn}>View</button>
+          <button style={styles.btn}>Delete</button>
+        </Box>
+      </Box>
+
     </Box>
   );
 };
@@ -22,10 +25,13 @@ const styles = {
     marginRight: "20px",
     marginBottom: "20px",
     border: `1px solid ${mainColor}`,
-    width: "132px",
+    minWidth: "136px",
     height: "164px",
-    color: ` ${mainColor}`,
+    color: `${mainColor}`,
     borderRadius: "4px",
+    "&:hover": {
+      color: 'transparent',
+    }
   },
   fileName: {
     fontSize: "12px",
@@ -38,6 +44,30 @@ const styles = {
     left: "50%",
     transform: "translate(-50%, -50%)",
   },
+  btn: {
+    width: '80px',
+    padding: '5px 0',
+    color: `${mainColor}`,
+    background: '#fff',
+    margin: '10px 0',
+    borderRadius: '4px'
+  },
+  action: {
+    background: "rgba(0, 0, 0, 0.3)",
+    height: '100%',
+    opacity: '0',
+    "&:hover": {
+      opacity: '1',
+    }
+  },
+  inner: {
+    zIndex: '2',
+    height: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center'
+  }
 };
 
 export default UploadedFile;

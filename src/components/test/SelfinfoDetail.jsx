@@ -9,7 +9,7 @@ import UploadImage from '../../custom/Uploads/UploadImage';
 
 const Self = ({ uploadImage, setUploadImage, selfFormikRef }) => {
 
-    const [nationality, setNationality] = useState([
+    const [nationality] = useState([
         { text: "日本" },
         { text: "アイスランド" },
         { text: "アイルランド" },
@@ -45,7 +45,7 @@ const Self = ({ uploadImage, setUploadImage, selfFormikRef }) => {
             validationSchema={formValidation}
         >
             {({ values, errors, touched, handleChange, handleBlur, }) => (
-                <Form>
+                <Form sx={{ display: 'block', }}>
                     <UploadImage uploadImage={uploadImage} setUploadImage={setUploadImage} />
                     <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
                         <InputText
@@ -56,8 +56,10 @@ const Self = ({ uploadImage, setUploadImage, selfFormikRef }) => {
                             value={values.surname}
                             errors={errors.surname}
                             touched={touched.surname}
-                            placeholder={'Surname'}
+                            text={'Surname'}
+                            width={'auto'}
                         />
+
                         <InputText
                             name={"name"}
                             type={"text"}
@@ -66,7 +68,8 @@ const Self = ({ uploadImage, setUploadImage, selfFormikRef }) => {
                             value={values.name}
                             errors={errors.name}
                             touched={touched.name}
-                            placeholder={'Name'}
+                            text={'Name'}
+                            width={'auto'}
                         />
                     </Box>
                     <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -78,8 +81,11 @@ const Self = ({ uploadImage, setUploadImage, selfFormikRef }) => {
                             value={values.kanaSurname}
                             errors={errors.kanaSurname}
                             touched={touched.kanaSurname}
-                            placeholder={'kanaSurname'}
+                            text={'Kana Surname'}
+                            placeholder={'Ex : タナカ'}
+                            width={'auto'}
                         />
+
                         <InputText
                             name={"kanaName"}
                             type={"text"}
@@ -88,7 +94,9 @@ const Self = ({ uploadImage, setUploadImage, selfFormikRef }) => {
                             value={values.kanaName}
                             errors={errors.kanaName}
                             touched={touched.kanaName}
-                            placeholder={'kanaName'}
+                            text={'Kana Name'}
+                            placeholder={'Ex : タロウ'}
+                            width={'auto'}
                         />
                     </Box>
 
@@ -100,7 +108,9 @@ const Self = ({ uploadImage, setUploadImage, selfFormikRef }) => {
                         value={values.position}
                         errors={errors.position}
                         touched={touched.position}
-                        placeholder={'position'}
+                        text={'Position at Work'}
+                        placeholder={'Ex : Floor Staff'}
+                        width={'96%'}
                     />
 
                     <SelectMenu
@@ -110,7 +120,7 @@ const Self = ({ uploadImage, setUploadImage, selfFormikRef }) => {
                         value={values.nationality}
                         errors={errors.nationality}
                         touched={touched.nationality}
-                        placeholder={'nationality'}
+                        text={'Nationality'}
                         data={nationality}
                     />
 
@@ -121,7 +131,7 @@ const Self = ({ uploadImage, setUploadImage, selfFormikRef }) => {
                         value={values.gender}
                         errors={errors.gender}
                         touched={touched.gender}
-                        placeholder={'gender'}
+                        text={'Gender'}
                         data={gender}
                     />
 
@@ -131,7 +141,8 @@ const Self = ({ uploadImage, setUploadImage, selfFormikRef }) => {
                         value={values.birthday}
                         errors={errors.birthday}
                         touched={touched.birthday}
-                        placeholder={'birthday'}
+                        text={'Birthday'}
+                        width={'100%'}
                     />
 
                     <InputText
@@ -142,18 +153,22 @@ const Self = ({ uploadImage, setUploadImage, selfFormikRef }) => {
                         value={values.phone}
                         errors={errors.phone}
                         touched={touched.phone}
-                        placeholder={'phone'}
+                        text={'Phone Number'}
+                        placeholder={'Ex : 080-0000-0000'}
+                        width={'96%'}
                     />
 
                     <InputText
                         name={"eMail"}
-                        type={"eMail"}
+                        type={"email"}
                         onChange={handleChange}
                         onBlur={handleBlur}
                         value={values.eMail}
                         errors={errors.eMail}
                         touched={touched.eMail}
-                        placeholder={'eMail'}
+                        text={'E-mail'}
+                        placeholder={'Ex : name@example.com'}
+                        width={'96%'}
                     />
 
                     <InputText
@@ -164,7 +179,8 @@ const Self = ({ uploadImage, setUploadImage, selfFormikRef }) => {
                         value={values.address}
                         errors={errors.address}
                         touched={touched.address}
-                        placeholder={'address'}
+                        text={'Address'}
+                        width={'96%'}
                     />
 
                     <InputText
@@ -175,7 +191,8 @@ const Self = ({ uploadImage, setUploadImage, selfFormikRef }) => {
                         value={values.busStation}
                         errors={errors.busStation}
                         touched={touched.busStation}
-                        placeholder={'busStation'}
+                        text={'Closest Train/Bus Station'}
+                        width={'96%'}
                     />
 
                     <InputText
@@ -186,8 +203,10 @@ const Self = ({ uploadImage, setUploadImage, selfFormikRef }) => {
                         value={values.transport}
                         errors={errors.transport}
                         touched={touched.transport}
-                        placeholder={'transport'}
+                        text={'Transport'}
+                        width={'96%'}
                     />
+
                 </Form>
             )}
         </Formik>

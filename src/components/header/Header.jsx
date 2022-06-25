@@ -58,7 +58,8 @@ const styles = {
     position: "relative",
   },
   content: {
-    width: "90%",
+    maxWidth: "1160px",
+    width: '100%',
     margin: "0 auto",
     height: "120px",
     display: "flex",
@@ -90,7 +91,7 @@ const styles = {
   },
   logo: {
     display: "flex",
-    marginLeft: "-35px",
+    marginLeft: "-52px",
     alignItems: "center",
   },
   box: {

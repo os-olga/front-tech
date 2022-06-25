@@ -80,40 +80,28 @@ const ActionHeader = ({
   };
 
   const publishResume = async () => {
-    // let image = new FormData();
-    // image.append("image", uploadImage);
+    let sendData = {
+      ...firstFormikRef.current.values,
+      ...secondFormikRef.current.values,
+      image: "qewe",
+      resumeTitle: resumeTitle,
+      status: "published",
+      workshift: workshift,
+    };
+    console.log(firstFormikRef.current.values)
+    console.log(secondFormikRef.current.values)
+    console.log(uploadImage)
+    const createResume = await API.post(`resumes`, sendData).catch((err) =>
+      console.log(err)
+    );
 
-    // let sendData = {
-    //   ...firstFormikRef.current.values,
-    //   ...secondFormikRef.current.values,
-    //   resumeTitle: resumeTitle,
-    //   status: "published",
-    // };
-
-    // API.post(`resumes`, sendData)
-    //   .then((res) => {
-    //     console.log(res);
-    //     navigate("/resumes");
-    //   })
-    //   .catch((err) => console.log(err));
-
-    // axios
-    //   .post("http://localhost:4040/media", image, {
-    //     headers: {
-    //       Authorization: `Bearer ${accessToken}`,
-    //       "Content-Type": "multipart/form-data",
-    //       Accept: "application/json",
-    //       type: "formData",
-    //     },
-    //   })
-    //   .then((res) => {
-    //     console.log(res);
-    //   })
-    //   .catch((error) => console.log(error));
+    uploadFile(uploadImage, createResume.data._id);
+    for (let i = 0; i < multipleFiles.length; i++) {
+      uploadFile(multipleFiles[i], createResume.data._id);
+    }
   };
 
   const openEditResume = async () => {
-    console.log('open edit')
     API.get(`/resumes/${resumeId}`)
       .then((response) => {
         localStorage.setItem("editResume", JSON.stringify(response.data));
@@ -130,11 +118,9 @@ const ActionHeader = ({
   };
 
   const generate = () => {
-    console.log('generate')
     API.get(`/generate/${resumeId}`)
       .then((response) => {
         let file = new Blob([response.data], { type: "application/pdf" });
-
         setPdfFile(URL.createObjectURL(file));
       })
       .catch((error) => console.log(error));
@@ -149,20 +135,10 @@ const ActionHeader = ({
       workshift: workshift,
     };
 
-    console.log(uploadImage)
     await API.put(`resumes/${id}`, sendData).then((res) => {
       console.log(res)
       navigate.push("/resumes")
     }).catch((err) => console.log(err))
-    // const createResume = await API.put(`resumes/${id}`, sendData).catch((err) =>
-    //   console.log(err)
-    // );
-
-
-    // uploadFile(uploadImage, createResume.data._id);
-    // for (let i = 0; i < multipleFiles.length; i++) {
-    //   uploadFile(multipleFiles[i], createResume.data._id);
-    // }
   }
 
   const publishEditResume = () => {

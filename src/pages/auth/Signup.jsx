@@ -5,6 +5,7 @@ import AuthForm from "../../components/auth/AuthForm";
 import AuthSidebar from "../../components/auth/AuthSidebar";
 import API from "../../helpers/api";
 import { styles } from "./auth.styles";
+import Footer from "../../components/footer/Footer";
 
 const Signup = (props) => {
   let navigate = useHistory();
@@ -18,7 +19,6 @@ const Signup = (props) => {
       };
       API.post(`auth/signup`, form).then((res) => {
         let user = res.data.user;
-        console.log(user);
         let token = res.data.accessToken;
         localStorage.setItem("accessToken", token);
         localStorage.setItem("user", JSON.stringify(user));
@@ -40,6 +40,7 @@ const Signup = (props) => {
           onSubmitForm={singup}
         />
       </Grid>
+      <Footer/>
     </Box>
   );
 };

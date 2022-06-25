@@ -3,6 +3,8 @@ import { useHistory } from "react-router-dom";
 import { Grid, Box } from "@mui/material";
 import AuthForm from "../../components/auth/AuthForm";
 import AuthSidebar from "../../components/auth/AuthSidebar";
+import AuthFooter from "../../components/auth/AuthFooter";
+import Footer from "../../components/footer/Footer";
 import API from "../../helpers/api";
 import { styles } from "./auth.styles";
 
@@ -21,8 +23,8 @@ const Signin = (props) => {
         .then((res) => {
           let user = res.config.data;
           let token = res.data.accessToken;
-          localStorage.setItem("accessToken", token);
           localStorage.setItem("user", user);
+          localStorage.setItem("accessToken", token);
           navigate.push("/resumes");
         })
         .catch((error) => {
@@ -46,6 +48,7 @@ const Signin = (props) => {
           onSubmitForm={singin}
         />
       </Grid>
+      <Footer />
     </Box>
   );
 };

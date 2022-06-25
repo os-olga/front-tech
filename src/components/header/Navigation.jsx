@@ -19,9 +19,9 @@ const Navigation = () => {
                 location.pathname === `${link.src}`
                   ? {
                     borderBottom: `1px solid ${mainColor}`,
-                    color: `${mainColor}`,
+                    color: `${mainColor}`, fontSize: '14px'
                   }
-                  : { borderBottom: "1px solid transparent" }
+                  : { borderBottom: "1px solid transparent", fontSize: '14px' }
               }
             >
               {link.link}
@@ -43,8 +43,8 @@ const data = [
     src: "/test",
   },
   {
-    link: "Help",
-    src: "/help",
+    link: "New design",
+    src: "/new",
   },
 ];
 

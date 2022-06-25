@@ -24,16 +24,6 @@ const Detail = ({ multipleFiles, upload, detailFormikRef, setWorkshift }) => {
                 skills: [],
                 interests: [],
                 whenStart: "",
-
-                workValue: "",
-                industryValue: "",
-                experienceValue: "",
-                languageValue: "",
-                certificationValue: "",
-                awardValue: "",
-                schoolValue: "",
-                skillValue: "",
-                interestValue: "",
             }}
             validationSchema={formValidation}
             onSubmit={values => {
@@ -63,17 +53,16 @@ const Detail = ({ multipleFiles, upload, detailFormikRef, setWorkshift }) => {
                         touched={touched}
                         title={"Work history"}
                         setFieldValue={setFieldValue}
-                        values={values}
                     />
 
-                    {/* <AutoInput
+                    <AutoInput
                         name={"industries"}
                         type={"text"}
                         onChange={handleChange}
                         onBlur={handleBlur}
-                        value={values.industries}
-                        errors={errors.industries}
-                        touched={touched.industries}
+                        value={values}
+                        errors={errors}
+                        touched={touched}
                         title={"Industries"}
                         setFieldValue={setFieldValue}
                         values={values}
@@ -84,9 +73,9 @@ const Detail = ({ multipleFiles, upload, detailFormikRef, setWorkshift }) => {
                         type={"text"}
                         onChange={handleChange}
                         onBlur={handleBlur}
-                        value={values.experiences}
-                        errors={errors.experiences}
-                        touched={touched.experiences}
+                        value={values}
+                        errors={errors}
+                        touched={touched}
                         title={"Experiences"}
                         setFieldValue={setFieldValue}
                         values={values}
@@ -177,11 +166,13 @@ const Detail = ({ multipleFiles, upload, detailFormikRef, setWorkshift }) => {
                         onBlur={handleBlur}
                         value={values.whenStart}
                         errors={errors.whenStart}
+                        text={"WHEN CAN I START?"}
                         touched={touched.whenStart}
                         setFieldValue={setFieldValue}
+                        width={'343px'}
                     />
 
-                    <Schedule setWorkshift={setWorkshift} /> */}
+                    <Schedule setWorkshift={setWorkshift} />
 
                 </Form>
             )}

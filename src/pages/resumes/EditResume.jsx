@@ -83,7 +83,7 @@ const EditResume = () => {
                 multiple
                 onChange={(event) => setUploadImage(event.target.files[0])}
               /> */}
-              <UploadImage setUploadImage={setUploadImage} uploadImage={"https://storage.cloud.google.com/wst-files/" + image[0].filePath} />
+              <UploadImage setUploadImage={setUploadImage} uploadImage={" `https://storage.cloud.google.com/cv-medias/" + image[0].filePath} />
               <Formik
                 innerRef={firstFormikRef}
                 enableReinitialize={true}

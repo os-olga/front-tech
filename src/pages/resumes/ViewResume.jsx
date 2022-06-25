@@ -8,6 +8,7 @@ import Loader from "../../custom/Loader/Loader";
 import UploadedFile from '../../custom/UploadedFile/UploadedFile';
 import API from "../../helpers/api";
 import Pdf from "react-to-pdf";
+import QRcode from 'qrcode'
 
 const ref = React.createRef();
 
@@ -30,13 +31,20 @@ const ViewResume = () => {
   useEffect(() => {
     API.get(`/media/${id}`)
       .then((response) => {
-        console.log(response, 'rs')
         setImage(response.data[0].filePath);
         setFiles(response.data.splice(1));
       })
       .catch((error) => console.log(error));
   }, [setImage]);
 
+
+  console.log(resume, typeof resume, 'resume')
+
+  const [code, setCode] = useState('')
+
+  useEffect(() => {
+    QRcode.toDataURL(document.location.href).then(setCode)
+  }, [])
 
   return (
     <Box sx={styles.container}>
@@ -47,6 +55,7 @@ const ViewResume = () => {
               display: "flex",
               justifyContent: "space-between",
               alignItems: "center",
+              marginBottom: "15px",
             }}
           >
             <Typography sx={{ marginBottom: "10px" }}>
@@ -78,7 +87,7 @@ const ViewResume = () => {
                 <img
                   src={
                     image !== undefined &&
-                    `https://storage.cloud.google.com/wst-files/${image}`
+                    `https://storage.cloud.google.com/cv-medias/${image}`
                   }
                   alt={`${image}`}
                   style={{ width: "inherit", height: "inherit" }}
@@ -120,6 +129,8 @@ const ViewResume = () => {
               <Typography sx={styles.text}>
                 Transport by {resume.transport}
               </Typography>
+
+              <img src={code} alt="" style={{width: '300px', height: '300px'}}/>
             </Grid>
 
             <Grid item xs={12} sm={7} md={7} lg={8} sx={{ ...styles.fields }}>

@@ -1,8 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { Box, Typography } from "@mui/material";
 import { styles } from "./scheduleStyles";
+import ScheduleLine from './ScheduleLine'
 
 const Schedule = ({ setWorkshift }) => {
+  const ref = useRef(null);
+  const [isPaintLine, setIsPaintLine] = useState(false)
+  const [scheduleLines, setLines] = useState([])
+
   let startedTime = 0;
 
   const initial = [
@@ -56,12 +61,32 @@ const Schedule = ({ setWorkshift }) => {
     setWorkshift(clonedSchedules);
   };
 
+
+  const handleMouseUp = () => {
+    setIsPaintLine(false)
+  }
+
+  const handleMouseDown = (e, hourIndex) => {
+    console.log(schedules[hourIndex].day, 'daay')
+    setLines([...scheduleLines, <ScheduleLine top={e.target.offsetTop + 30 + (hourIndex * 40)} left={e.target.offsetLeft} ref={ref} handleMouseUp={handleMouseUp}/>])
+    console.log(scheduleLines, 'scheduleLines')
+    setIsPaintLine(true)
+  }
+
+  console.log(scheduleLines, 'all')
+  const handleMouseMove = (e, hourIndex) => {
+    if(isPaintLine) {
+      ref.current.changeWidth()
+    }
+  }
+
+
   return (
     <>
       <Typography sx={{ ...styles.fieldTitle, margin: "40px 0" }}>
         DESIRABLE WORKSHIFT
       </Typography>
-      <Box sx={styles.container}>
+      <Box sx={{ ...styles.container, position: 'relative', overflow: 'hidden' }} >
         <Box sx={styles.block}>
           <Box sx={styles.times}>
             {times.map((t, timeIndex) => {
@@ -79,9 +104,14 @@ const Schedule = ({ setWorkshift }) => {
           </Box>
         </Box>
 
+        {scheduleLines && scheduleLines.map((line) => line)}
+
         {schedules.map((schedule, scheduleIndex) => {
           return (
-            <Box key={scheduleIndex} sx={styles.schedule}>
+            <Box
+              key={scheduleIndex}
+              sx={{ ...styles.schedule, position: 'relative' }}
+            >
               <Box sx={{ width: "15%" }}>
                 <Typography sx={{ paddingTop: "8px" }}>
                   {schedule.day}
@@ -95,8 +125,21 @@ const Schedule = ({ setWorkshift }) => {
                       key={hourIndex}
                       sx={{ ...styles.hourItem }}
                       onClick={() => handleClick(scheduleIndex, hourIndex)}
+                      value={hourIndex}
+                      onMouseDown={(e) => handleMouseDown(e, scheduleIndex)}
+                      onMouseMove={(e) => handleMouseMove(e, scheduleIndex)}
+                      onMouseUp={(e) => handleMouseUp()}
+                    // style={
+                    //   hour
+                    //     ? {
+                    //       background: "#29CC8F",
+                    //       height: "25px",
+                    //       // marginTop: "7px",
+                    //     }
+                    //     : { background: "transparent" }
+                    // }
                     >
-                      <Box
+                      {/* <Box
                         style={
                           hour
                             ? {
@@ -106,9 +149,9 @@ const Schedule = ({ setWorkshift }) => {
                             }
                             : { background: "transparent" }
                         }
-                      >
-                        {hour}
-                      </Box>
+                      > */}
+                      {hour}
+                      {/* </Box> */}
                     </Box>
                   );
                 })}

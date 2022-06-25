@@ -47,14 +47,14 @@ const Test = () => {
             </Box>
 
             <Grid container>
-                <Grid item xs={12} sm={5} md={5} lg={4} sx={{ ...styles.introduction }}>
+                <Grid item xs={12} sm={5} md={5} lg={4.5} sx={{ ...styles.introduction }}>
                     <Self
                         uploadImage={uploadImage}
                         setUploadImage={setUploadImage}
                         selfFormikRef={selfFormikRef}
                     />
                 </Grid>
-                <Grid item xs={12} sm={7} md={7} lg={8} sx={{ ...styles.fields }}>
+                <Grid item xs={12} sm={7} md={7} lg={7.5} sx={{ ...styles.fields }}>
                     <Detail
                         multipleFiles={multipleFiles}
                         setMultipleFiles={setMultipleFiles}
@@ -64,21 +64,21 @@ const Test = () => {
                     />
                 </Grid>
             </Grid>
-
         </Box>
     )
 }
 
 const styles = {
     container: {
-        width: "90%",
-        margin: "0 auto",
+        width: "970px",
+        margin: '0 auto 40px auto',
         position: "relative",
         "@media (max-width: 900px)": {
             width: "100%",
         },
     },
     introduction: {
+        display: 'block',
         border: "1px solid #C4C4C4",
         padding: "20px",
         borderRight: "none",
@@ -131,7 +131,6 @@ const styles = {
         justifyContent: 'center',
         textAlign: 'center'
     },
-
     output: {
         border: "1px solid #29CC8F",
         width: "132px",
